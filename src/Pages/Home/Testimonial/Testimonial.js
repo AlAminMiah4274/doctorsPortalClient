@@ -7,6 +7,7 @@ import TestimonialCard from "./TestimonialCard";
 
 const Testimonial = () => {
 
+    // patient's review data 
     const speeches = [
         {
             id: 1,
@@ -40,9 +41,12 @@ const Testimonial = () => {
                     <h1 className="text-4xl">What Our Patients Says</h1>
                 </div>
 
-                <img src={quote} alt="" className="h-36" />
+                <figure>
+                    <img src={quote} alt="" className="sm:h-10 lg:h-36" />
+                </figure>
             </div>
 
+            {/* sent the patient review data to the TestimonialCard component */}
             <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {
                     speeches.map(speech => <TestimonialCard
