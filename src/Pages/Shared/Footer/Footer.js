@@ -3,13 +3,16 @@ import footerImage from "../../../assets/images/footer.png";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+
+    const copyrightYear = new Date().getFullYear();
+
     return (
         <footer style={{
             background: `url(${footerImage})`,
             backgroundSize: 'cover'
         }} className="p-10 text-black mt-16">
 
-            <div className="footer flex justify-around">
+            <div className="footer flex flex-col lg:flex-row justify-around">
                 <nav>
                     <header className="footer-title">Services</header>
                     <Link to="/" className="link link-hover">Branding</Link>
@@ -33,7 +36,7 @@ const Footer = () => {
             </div>
 
             <div className="text-center mt-32">
-                <p>Copyright © 2023 - All right reserved by Doctors Portal</p>
+                <p>© Doctors Portal {copyrightYear}</p>
             </div>
 
         </footer>

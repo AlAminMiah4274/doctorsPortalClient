@@ -2,7 +2,6 @@ import React from "react";
 
 const AboutCard = ({ aboutInfo }) => {
 
-    console.log(aboutInfo);
     const { name, description, bgColor, icon } = aboutInfo;
 
     return (
