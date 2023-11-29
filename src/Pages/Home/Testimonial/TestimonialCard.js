@@ -15,7 +15,7 @@ const TestimonialCard = ({ speech }) => {
                 <div className="card-actions flex items-center mt-5">
                     
                     {/* patient image */}
-                    <img src={image} alt="" className="rounded-xl h-16 border-4 rounded-full border-secondary" />
+                    <img src={image} alt="" className="h-16 border-4 rounded-full border-secondary" />
 
                     {/* patient name and address */}
                     <div>
