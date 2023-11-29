@@ -5,8 +5,8 @@ const Navbar = () => {
 
     // item names for navbar
     const navmenuItems = <>
-        <li><Link>Home</Link></li>
-        <li><Link>Appointment</Link></li>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/appointment">Appointment</Link></li>
         <li><Link>About</Link></li>
         <li><Link>Login</Link></li>
     </>
