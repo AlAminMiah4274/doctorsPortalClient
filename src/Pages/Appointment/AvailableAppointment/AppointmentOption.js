@@ -1,32 +1,44 @@
 import React from "react";
 import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton";
 
-const AppointmentOption = ({ option }) => {
+const AppointmentOption = ({ appointmentOption, setTreatment }) => {
 
-    const { name, slots } = option;
+    // destructured gotten from the AvailableAppointment component 
+    const { name, slots } = appointmentOption;
 
     return (
         <div className="card shadow-2xl">
 
             <div className="card-body">
 
+                {/* shown appointment name */}
                 <h2 className="card-title justify-center">{name}</h2>
 
+                {/* shown appointment slots */}
                 <p className="text-center">
                     {
                         slots.length > 0 ?
-                        <select className="select select-bordered">
-                            {slots.map(slot => <option value={slot}>{slot}</option>)}
-                        </select>
-                        :
-                        'Try Another Day'
+                            <select className="select select-bordered">
+                                {slots.map(slot => <option value={slot}>{slot}</option>)}
+                            </select>
+                            :
+                            'Try Another Day'
                     }
                 </p>
-                
+
+                {/* shown available spaces */}
                 <p className="text-center">{slots.length} {slots.length > 1 ? 'Spaces' : 'Space'} Available</p>
 
                 <div className="card-actions justify-center mt-10">
-                    <PrimaryButton>Book Appoinment</PrimaryButton>
+                    
+                    {/* shown the modal by clicking the button */}
+                    <button className="btn bg-gradient-to-r from-secondary to-primary text-white"
+                        // to opent the modal
+                        onClick={() => document.getElementById('bookingModal').showModal()}
+                        // to send the appointmentOption data in the BookingModal component 
+                        onMouseEnter={() => setTreatment(appointmentOption)}
+                    >Book Appointment</button>
+
                 </div>
 
             </div>

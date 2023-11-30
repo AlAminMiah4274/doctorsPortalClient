@@ -1,10 +1,14 @@
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import AppointmentOption from "./AppointmentOption";
+import BookingModal from "../BookingModal/BookingModal";
 
 const AvailableAppointment = ({ selectedDate }) => {
 
     const [appointmentOptions, setAppointmentOptions] = useState([]);
+
+    // declared this state for getting appointmentOption data from the appointmentOption component using onMouseEnter
+    const [treatment, setTreatment] = useState(null); // treatment is another name of appointmentOption
 
     useEffect(() => {
         fetch('appointmentOptions.json')
@@ -20,10 +24,19 @@ const AvailableAppointment = ({ selectedDate }) => {
                 {
                     appointmentOptions.map(option => <AppointmentOption
                         key={option._id}
-                        option={option}
+                        appointmentOption={option}
+                        setTreatment={setTreatment}
                     ></AppointmentOption>)
                 }
             </div>
+
+            {
+                // used treatment && to prevent the error. Because the inital value of this state is null
+                treatment &&
+                <BookingModal
+                    treatment={treatment}
+                ></BookingModal>
+            }
         </div>
     );
 };
