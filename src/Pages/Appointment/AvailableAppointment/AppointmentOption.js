@@ -27,6 +27,8 @@ const AppointmentOption = ({ appointmentOption, setTreatment }) => {
                         onClick={() => document.getElementById('bookingModal').showModal()}
                         // to send the appointmentOption data in the BookingModal component 
                         onMouseEnter={() => setTreatment(appointmentOption)}
+                        // to disable the button when there is no available slots 
+                        disabled={slots.length === 0}
                     >Book Appointment</button>
 
                 </div>
