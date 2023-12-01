@@ -1,5 +1,4 @@
 import React from "react";
-import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton";
 
 const AppointmentOption = ({ appointmentOption, setTreatment }) => {
 
@@ -15,22 +14,13 @@ const AppointmentOption = ({ appointmentOption, setTreatment }) => {
                 <h2 className="card-title justify-center">{name}</h2>
 
                 {/* shown appointment slots */}
-                <p className="text-center">
-                    {
-                        slots.length > 0 ?
-                            <select className="select select-bordered">
-                                {slots.map(slot => <option value={slot}>{slot}</option>)}
-                            </select>
-                            :
-                            'Try Another Day'
-                    }
-                </p>
+                <p className="text-center">{slots.length > 0 ? slots[0] : "Try Another Day"}</p>
 
                 {/* shown available spaces */}
                 <p className="text-center">{slots.length} {slots.length > 1 ? 'Spaces' : 'Space'} Available</p>
 
                 <div className="card-actions justify-center mt-10">
-                    
+
                     {/* shown the modal by clicking the button */}
                     <button className="btn bg-gradient-to-r from-secondary to-primary text-white"
                         // to opent the modal

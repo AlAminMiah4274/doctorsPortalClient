@@ -34,6 +34,7 @@ const AvailableAppointment = ({ selectedDate }) => {
                 // used treatment && to prevent the error. Because the inital value of this state is null
                 treatment &&
                 <BookingModal
+                    selectedDate={selectedDate}
                     treatment={treatment}
                 ></BookingModal>
             }
