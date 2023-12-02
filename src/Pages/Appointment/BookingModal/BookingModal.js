@@ -1,12 +1,40 @@
 import { format } from "date-fns";
 import React from "react";
 
-const BookingModal = ({ treatment, selectedDate }) => {
+const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
 
     // destructured gotten from the AvailableAppointment component 
     const { name, slots } = treatment;
 
     const date = format(selectedDate, "PP");
+
+    // to handle the modal form
+    const handleBooking = event => {
+
+        // to prevent refreshing after clicking on the submit button 
+        event.preventDefault();
+
+        const form = event.target;
+        const slot = form.slot.value;
+        const patientName = form.name.value;
+        const email = form.email.value;
+        const phone = form.phone.value;
+
+        // to organise the booking modal data for sending to the database 
+        const booking = {
+            appointmentDate: date,
+            treatmentName: name,
+            patientName,
+            patientEmail: email,
+            patientPhone: phone,
+            slot
+        };
+
+        console.log(booking);
+
+        // to close the modal after submitting 
+        setTreatment(null);
+    };
 
     return (
         <>
@@ -16,17 +44,20 @@ const BookingModal = ({ treatment, selectedDate }) => {
 
                     <h3 className="font-bold text-lg">{name}</h3>
 
-                    <form method="dialog" className="grid grid-cols-1 gap-5 mt-10">
+                    <form onSubmit={handleBooking} method="dialog" className="grid grid-cols-1 gap-5 mt-10">
 
-                        <input type="text" name="age" disabled value={date} className="input input-bordered w-full" />
+                        <input type="text" disabled value={date} className="input input-bordered w-full" />
 
-                        <select className="select select-bordered w-full">
-                            {slots.map(slot => <option value={slot}>{slot}</option>)}
+                        <select name="slot" className="select select-bordered w-full">
+                            {slots.map((slot, i) => <option
+                                value={slot}
+                                key={i}
+                            >{slot}</option>)}
                         </select>
 
-                        <input type="text" name="name" placeholder="Name" className="input input-bordered w-full" />
-                        <input type="email" name="email" placeholder="Email" className="input input-bordered w-full" />
-                        <input type="text" name="phoneNumber" placeholder="Phone Number" className="input input-bordered w-full" />
+                        <input name="name" type="text" placeholder="Your Name" className="input input-bordered w-full" required />
+                        <input name="email" type="email" placeholder="Email Address" className="input input-bordered w-full" required />
+                        <input name="phone" type="text" placeholder="Phone Number" className="input input-bordered w-full" required />
                         <br />
                         <input type="submit" value="Submit" className="btn w-full btn-accent" />
 
@@ -34,7 +65,7 @@ const BookingModal = ({ treatment, selectedDate }) => {
 
                 </div>
 
-                {/* to close the modal. Because tow button in a form both work same action */}
+                {/* to close the modal. Because two button in a form both work same action */}
                 <form method="dialog" className="modal-backdrop">
                     <button>close</button>
                 </form>
