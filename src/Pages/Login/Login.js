@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Login = () => {
 
     // elements from react hook form 
-    const { register, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm();
 
     // to handle the login form 
     const handleLogin = data => {
@@ -22,12 +22,22 @@ const Login = () => {
 
                     <label className="form-control w-full">
                         <div className="label"><span className="label-text">Email</span></div>
-                        <input type="email" {...register("email")} className="input input-bordered w-full" required />
+                        <input type="email" {...register("email", {
+                            required: "Email is required"
+                        })}
+                            className="input input-bordered w-full" />
+
+                        {errors.email && <p className="text-red-500 text-sm">{errors.email?.message}</p>}
                     </label>
 
                     <label className="form-control w-full">
                         <div className="label"><span className="label-text">Password</span></div>
-                        <input type="password" {...register("password")} className="input input-bordered w-full" required />
+                        <input type="password" {...register("password", {
+                            required: "Password is required"
+                        })}
+                            className="input input-bordered w-full" />
+
+                        {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
                     </label>
 
                     <div className="label"><span className="label-text">Forget password?</span></div>
