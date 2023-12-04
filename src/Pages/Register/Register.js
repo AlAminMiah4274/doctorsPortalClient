@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
+import toast from "react-hot-toast";
 
 const Register = () => {
 
@@ -28,6 +29,8 @@ const Register = () => {
                 userProfileUpdate(userInfo)
                     .then(() => { })
                     .catch(err => console.error(err))
+
+                toast.success("Registration confirmed");
             })
             .catch(err => console.error(err))
     };
