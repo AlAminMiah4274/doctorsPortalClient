@@ -5,7 +5,7 @@ import { AuthContext } from "../../../Context/AuthProvider";
 const Navbar = () => {
 
     // destructured auth elements 
-    const {user, userLogOut} = useContext(AuthContext);
+    const { user, userLogOut } = useContext(AuthContext);
 
     // to log out the user 
     const handleUserLogOut = () => {
@@ -20,10 +20,13 @@ const Navbar = () => {
         <li><Link to="/appointment">Appointment</Link></li>
         <li><Link>About</Link></li>
         {
-            user?.uid ? 
-            <li><button onClick={handleUserLogOut}>Log Out</button></li>
-            :
-            <li><Link to="/login">Login</Link></li>
+            user?.uid ?
+                <>
+                    <li><Link to="/dashboard">Dashboard</Link></li>
+                    <li><button onClick={handleUserLogOut}>Log Out</button></li>
+                </>
+                :
+                <li><Link to="/login">Login</Link></li>
         }
     </>
 
@@ -50,7 +53,7 @@ const Navbar = () => {
                 <Link to="/" className="text-2xl font-bold">Doctors Portal</Link>
 
             </div>
-            
+
             {/* navbar items for large devices */}
             <div className="navbar-end hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

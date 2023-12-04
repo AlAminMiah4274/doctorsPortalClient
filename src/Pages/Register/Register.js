@@ -18,6 +18,7 @@ const Register = () => {
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
+                console.log(user);
 
                 const userInfo = {
                     displayName: data.name
@@ -32,7 +33,7 @@ const Register = () => {
     };
 
     return (
-        <div className="h-[500px] flex justify-center items-center">
+        <div className="flex justify-center items-center">
 
             <div className="lg:w-96 shadow-xl p-7 mt-10">
                 <h1 className="text-2xl text-center">Sign Up</h1>
