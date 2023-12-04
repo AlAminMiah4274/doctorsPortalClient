@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthProvider";
 
 const Register = () => {
 
     // elements from react hook form 
-    const {register, handleSubmit, formState: {errors}} = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
+    // destructured auth elements 
+    const { createUser, userProfileUpdate } = useContext(AuthContext);
 
     // to handle register form 
     const handleRegister = (data) => {
-        console.log(data);
+
+        // user account creating function from auth 
+        createUser(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+
+                const userInfo = {
+                    displayName: data.name
+                };
+
+                // user profile updating function from auth 
+                userProfileUpdate(userInfo)
+                    .then(() => { })
+                    .catch(err => console.error(err))
+            })
+            .catch(err => console.error(err))
     };
 
     return (
@@ -25,8 +44,8 @@ const Register = () => {
                         <div className="label"><span className="label-text">Name</span></div>
                         <input type="text" {...register("name", {
                             required: "Name is required"
-                        })} 
-                        className="input input-bordered w-full" />
+                        })}
+                            className="input input-bordered w-full" />
 
                         {errors.name && <p className="text-red-500 text-sm">{errors.name?.message}</p>}
                     </label>
@@ -36,20 +55,23 @@ const Register = () => {
                         <div className="label"><span className="label-text">Email</span></div>
                         <input type="email" {...register("email", {
                             required: "Email is required"
-                        })} 
-                        className="input input-bordered w-full" />
+                        })}
+                            className="input input-bordered w-full" />
 
                         {errors.email && <p className="text-red-500 text-sm">{errors.email?.message}</p>}
                     </label>
-                    
+
                     {/* password field */}
                     <label className="form-control w-full">
                         <div className="label"><span className="label-text">Password</span></div>
                         <input type="password" {...register("password", {
                             required: "Password is required",
-                            pattern: {value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$/, message: 'Password must be strong'}
-                        })} 
-                        className="input input-bordered w-full" />
+                            pattern: {
+                                value: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}/,
+                                message: 'Password must be strong'
+                            }
+                        })}
+                            className="input input-bordered w-full" />
 
                         {errors.password && <p className="text-red-500 text-sm">{errors.password?.message}</p>}
                     </label>
@@ -61,7 +83,9 @@ const Register = () => {
 
                 </form>
 
-                <p className="label-text text-center">Already have an accoutn? <Link to="/login" className="text-secondary">Please log in</Link></p>
+                <p className="label-text text-center">
+                    Already have an accoutn? <Link to="/login" className="text-secondary">Please log in</Link>
+                </p>
 
             </div>
         </div>

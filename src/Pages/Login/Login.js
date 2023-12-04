@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthProvider";
 
 const Login = () => {
 
     // elements from react hook form 
     const { register, formState: { errors }, handleSubmit } = useForm();
 
+    // destructured auth elements 
+    const {userLogIn} = useContext(AuthContext);
+
     // to handle the login form 
     const handleLogin = data => {
-        console.log(data);
+
+        // user log in function from auth 
+        userLogIn(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(err => console.error(err))
     };
 
     return (

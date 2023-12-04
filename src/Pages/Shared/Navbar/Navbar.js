@@ -1,14 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../Context/AuthProvider";
 
 const Navbar = () => {
+
+    // destructured auth elements 
+    const {user, userLogOut} = useContext(AuthContext);
+
+    // to log out the user 
+    const handleUserLogOut = () => {
+
+        // current user log out function from auth 
+        userLogOut();
+    };
 
     // item names for navbar
     const navmenuItems = <>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/appointment">Appointment</Link></li>
         <li><Link>About</Link></li>
-        <li><Link to="/login">Login</Link></li>
+        {
+            user?.uid ? 
+            <li><button onClick={handleUserLogOut}>Log Out</button></li>
+            :
+            <li><Link to="/login">Login</Link></li>
+        }
     </>
 
     return (
