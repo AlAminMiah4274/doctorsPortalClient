@@ -20,6 +20,7 @@ const Register = () => {
 
                 <form onSubmit={handleSubmit(handleRegister)}>
 
+                    {/* name field */}
                     <label className="form-control w-full">
                         <div className="label"><span className="label-text">Name</span></div>
                         <input type="text" {...register("name", {
@@ -30,6 +31,7 @@ const Register = () => {
                         {errors.name && <p className="text-red-500 text-sm">{errors.name?.message}</p>}
                     </label>
 
+                    {/* email field */}
                     <label className="form-control w-full">
                         <div className="label"><span className="label-text">Email</span></div>
                         <input type="email" {...register("email", {
@@ -39,11 +41,13 @@ const Register = () => {
 
                         {errors.email && <p className="text-red-500 text-sm">{errors.email?.message}</p>}
                     </label>
-
+                    
+                    {/* password field */}
                     <label className="form-control w-full">
                         <div className="label"><span className="label-text">Password</span></div>
                         <input type="password" {...register("password", {
-                            required: "Password is required"
+                            required: "Password is required",
+                            pattern: {value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$/, message: 'Password must be strong'}
                         })} 
                         className="input input-bordered w-full" />
 

@@ -27,17 +27,19 @@ const Login = () => {
                         })}
                             className="input input-bordered w-full" />
 
-                        {errors.email && <p className="text-red-500 text-sm">{errors.email?.message}</p>}
+                        {errors?.email && <p className="text-red-500 text-sm">{errors?.email?.message}</p>}
                     </label>
 
                     <label className="form-control w-full">
                         <div className="label"><span className="label-text">Password</span></div>
                         <input type="password" {...register("password", {
-                            required: "Password is required"
+
+                            // for required the field 
+                            required: "Password is required",
                         })}
                             className="input input-bordered w-full" />
 
-                        {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+                        {errors?.password && <p className="text-red-500 text-sm">{errors?.password?.message}</p>}
                     </label>
 
                     <div className="label"><span className="label-text">Forget password?</span></div>
