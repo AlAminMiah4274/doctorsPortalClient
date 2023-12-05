@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
@@ -12,8 +12,14 @@ const Register = () => {
     // destructured auth elements 
     const { createUser, userProfileUpdate } = useContext(AuthContext);
 
+    // to show sign up error in the UI 
+    const [signUpError, setSignUpError] = useState('');
+
     // to handle register form 
     const handleRegister = (data) => {
+
+        // to remove the error text form the UI 
+        setSignUpError('');
 
         // user account creating function from auth 
         createUser(data.email, data.password)
@@ -32,7 +38,10 @@ const Register = () => {
 
                 toast.success("Registration confirmed");
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                // to get the error message 
+                setSignUpError(err.message);
+            })
     };
 
     return (
@@ -81,6 +90,11 @@ const Register = () => {
                     </label>
 
                     <div className="label"><span className="label-text">Forgot password?</span></div>
+
+                    {/* sign up error message */}
+                    {
+                        signUpError && <p className="text-red-500 text-sm">{signUpError}</p>
+                    }
 
                     {/* submit button of the form */}
                     <input type="submit" value="Submit" className="btn btn-accent w-full mt-8" />
