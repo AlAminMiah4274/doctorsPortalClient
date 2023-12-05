@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import toast from "react-hot-toast";
 
@@ -14,6 +14,10 @@ const Register = () => {
 
     // to show sign up error in the UI 
     const [signUpError, setSignUpError] = useState('');
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     // to handle register form 
     const handleRegister = (data) => {
@@ -37,6 +41,8 @@ const Register = () => {
                     .catch(err => console.error(err))
 
                 toast.success("Registration confirmed");
+
+                navigate(from, {replace: true});
             })
             .catch(err => {
                 // to get the error message 
