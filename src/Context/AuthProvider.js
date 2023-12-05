@@ -8,14 +8,24 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true); // to prevent the redirect to the login page after reloading 
+
+    // Why do we set the loading state to true in other functions?
+    /*
+    setting the loading state to true in functions like user account creation and user login functions
+    is crucial for providing a consistent, informative, and responsive user experience 
+    while handling potential errors and ensuring a smooth user flow.
+    */
 
     // to create account of the user 
     const createUser = (email, password) => {
+        setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
     };
 
     // to log in the user 
     const userLogIn = (email, password) => {
+        setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     };
 
@@ -25,6 +35,7 @@ const AuthProvider = ({ children }) => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
             console.log("Current User:", currentUser);
+            setLoading(false);
         });
 
         return () => unsubscribe();
@@ -33,6 +44,7 @@ const AuthProvider = ({ children }) => {
 
     // to logout the user 
     const userLogOut = () => {
+        setLoading(true);
         return signOut(auth);
     };
 
@@ -42,6 +54,7 @@ const AuthProvider = ({ children }) => {
     };
 
     const authInfo = {
+        loading,
         user,
         createUser,
         userLogIn,

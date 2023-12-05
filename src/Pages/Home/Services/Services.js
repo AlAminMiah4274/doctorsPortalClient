@@ -9,19 +9,19 @@ const Services = () => {
     // created an array of data for service card 
     const services = [
         {
-            id: 1,
+            id: 5431,
             name: 'Flouride Treatment',
             description: 'Lorem Ipsum is simply dummy printing and typesetting indust Ipsum has been the',
             image: flouride
         },
         {
-            id: 2,
+            id: 5432,
             name: 'Cavity Filling',
             description: 'Lorem Ipsum is simply dummy printing and typesetting indust Ipsum has been the',
             image: cavity
         },
         {
-            id: 1,
+            id: 5433,
             name: 'Teeth Whitening',
             description: 'Lorem Ipsum is simply dummy printing and typesetting indust Ipsum has been the',
             image: whitening
