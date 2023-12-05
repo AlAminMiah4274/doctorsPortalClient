@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import toast from "react-hot-toast";
 
@@ -15,6 +15,10 @@ const Login = () => {
     // to show log in related error 
     const [loginError, setLoginError] = useState("");
 
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
     // to handle the login form 
     const handleLogin = data => {
 
@@ -28,6 +32,8 @@ const Login = () => {
                 console.log(user);
 
                 toast.success("Log in confirmed");
+
+                navigate(from, {replace: true});
             })
             .catch(err => {
                 // to send the error to the state
