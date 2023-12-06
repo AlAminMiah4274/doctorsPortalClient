@@ -16,8 +16,6 @@ const Register = () => {
     const [signUpError, setSignUpError] = useState('');
 
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
 
     // to handle register form 
     const handleRegister = (data) => {
@@ -42,7 +40,7 @@ const Register = () => {
 
                 toast.success("Registration confirmed");
 
-                navigate(from, {replace: true});
+                navigate("/");
             })
             .catch(err => {
                 // to get the error message 
