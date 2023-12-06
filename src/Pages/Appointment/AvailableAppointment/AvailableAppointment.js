@@ -1,20 +1,31 @@
 import { format } from "date-fns";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AppointmentOption from "./AppointmentOption";
 import BookingModal from "../BookingModal/BookingModal";
+import { useQuery } from "@tanstack/react-query";
 
 const AvailableAppointment = ({ selectedDate }) => {
 
-    const [appointmentOptions, setAppointmentOptions] = useState([]);
+    // const [appointmentOptions, setAppointmentOptions] = useState([]);
 
     // declared this state for getting appointmentOption data from the appointmentOption component using onMouseEnter
     const [treatment, setTreatment] = useState(null); // treatment is another name of appointmentOption
 
-    useEffect(() => {
-        fetch('http://localhost:5000/appointmentOptions')
-            .then(res => res.json())
-            .then(data => setAppointmentOptions(data))
-    }, []);
+    // tanstack/react query 
+    const { data: appointmentOptions = [] } = useQuery({
+        queryKey: ['appointmentOptions'],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/appointmentOptions`);
+            const data = await res.json();
+            return data;
+        }
+    });
+
+    // useEffect(() => {
+    //     fetch('http://localhost:5000/appointmentOptions')
+    //         .then(res => res.json())
+    //         .then(data => setAppointmentOptions(data))
+    // }, []);
 
     return (
         <div className="mt-16">
