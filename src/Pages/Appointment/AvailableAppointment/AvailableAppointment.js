@@ -10,12 +10,13 @@ const AvailableAppointment = ({ selectedDate }) => {
 
     // declared this state for getting appointmentOption data from the appointmentOption component using onMouseEnter
     const [treatment, setTreatment] = useState(null); // treatment is another name of appointmentOption
+    const date = format(selectedDate, "PP");
 
     // tanstack/react query 
-    const { data: appointmentOptions = [] } = useQuery({
-        queryKey: ['appointmentOptions'],
+    const { data: appointmentOptions = [], isLoading } = useQuery({
+        queryKey: ['appointmentOptions', date],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/appointmentOptions`);
+            const res = await fetch(`http://localhost:5000/appointmentOptions?date=${date}`);
             const data = await res.json();
             return data;
         }
@@ -26,6 +27,10 @@ const AvailableAppointment = ({ selectedDate }) => {
     //         .then(res => res.json())
     //         .then(data => setAppointmentOptions(data))
     // }, []);
+
+    if(isLoading){
+        return <div className="flex justify-center items-center"><span className="loading loading-spinner text-success loading-lg"></span></div>;
+    };
 
     return (
         <div className="mt-16">

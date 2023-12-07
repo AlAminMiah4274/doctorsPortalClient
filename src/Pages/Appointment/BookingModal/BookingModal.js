@@ -82,7 +82,7 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
                         {
                             user?.uid ?
                                 <input type="submit" value="Submit" className="btn w-full btn-accent" /> :
-                                <button className="btn w-full btn-secondary text-white"><Link to="/login">Login First</Link></button>
+                                <Link to="/login"><button className="btn w-full btn-secondary text-white">Login First</button></Link>
                         }
 
                     </form>
