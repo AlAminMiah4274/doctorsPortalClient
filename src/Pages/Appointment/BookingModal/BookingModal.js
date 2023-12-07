@@ -52,9 +52,15 @@ const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
                     // to close the modal after submitting 
                     setTreatment(null);
 
-                    // a hook of react query from availableAppointment 
+                    // a hook of react query from availableAppointment. Used to refresh available data 
                     refetch();
-                };
+                }
+                else{
+                    toast.error(data.message);
+
+                    // to close the modal after submitting
+                    setTreatment(null);
+                }
             })
     };
 
