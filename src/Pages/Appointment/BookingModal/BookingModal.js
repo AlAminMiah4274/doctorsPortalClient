@@ -4,7 +4,7 @@ import { AuthContext } from "../../../Context/AuthProvider";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
-const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
+const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
 
     // destructured gotten from the AvailableAppointment component 
     const { name, slots } = treatment;
@@ -51,6 +51,9 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
 
                     // to close the modal after submitting 
                     setTreatment(null);
+
+                    // a hook of react query from availableAppointment 
+                    refetch();
                 };
             })
     };
