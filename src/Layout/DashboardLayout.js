@@ -12,15 +12,18 @@ const DashboardLayout = () => {
                 <input id="dashboardDrawer" type="checkbox" className="drawer-toggle" />
 
                 {/* page content */}
-                <div className="drawer-content">
+                <div className="drawer-content bg-green-50">
+
                     <Outlet></Outlet>
+
                 </div>
 
                 {/* drawer content */}
                 <div className="drawer-side">
                     <label htmlFor="dashboardDrawer" aria-label="close sidebar" className="drawer-overlay"></label>
-                    <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-                        <li><Link>Sidebar Item 1</Link></li>
+
+                    <ul className="menu p-4 w-80 min-h-full text-base-content">
+                        <li><Link>My Appointment</Link></li>
                         <li><Link>Sidebar Item 2</Link></li>
                     </ul>
 
