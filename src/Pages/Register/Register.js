@@ -35,16 +35,39 @@ const Register = () => {
 
                 // user profile updating function from auth 
                 userProfileUpdate(userInfo)
-                    .then(() => { })
+                    .then(() => {
+                        saveUserInfo(data.name, data.email);
+                    })
                     .catch(err => console.error(err))
-
-                toast.success("Registration confirmed");
-
-                navigate("/");
             })
             .catch(err => {
                 // to get the error message 
                 setSignUpError(err.message);
+            })
+    };
+
+    // to save the user info in the database 
+    const saveUserInfo = (name, email) => {
+
+        const user = {name, email};
+
+        fetch(`http://localhost:5000/users`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+
+                if(data.acknowledged){
+                    // to ensure the user about confirmation 
+                    toast.success("Resgistration is confirmed");
+                    // to redirect the user at home route
+                    navigate("/");
+                };
             })
     };
 
