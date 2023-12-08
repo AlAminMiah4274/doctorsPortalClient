@@ -1,14 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { AuthContext } from "../../../Context/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
 
 const MyAppointment = () => {
 
     const { user } = useContext(AuthContext);
 
-
-    // to laod bookings data from database using tanstack query 
-    const { data: bookings = [], } = useQuery({
+    const { data: bookings = [] } = useQuery({
         queryKey: ["bookings", user?.email],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/bookings?email=${user?.email}`);
@@ -17,17 +15,14 @@ const MyAppointment = () => {
         }
     });
 
-    console.log(bookings);
-
     return (
-        <div className="p-10">
+        <div className="p-7">
             <h1 className="text-2xl mb-6">My Appointment</h1>
 
             <div className="overflow-x-auto">
                 <table className="table">
 
-                    {/* head */}
-                    <thead className="bg-gray-300">
+                    <thead className="bg-gray-100">
                         <tr>
                             <th>Qty</th>
                             <th>Name</th>
@@ -38,17 +33,19 @@ const MyAppointment = () => {
                     </thead>
 
                     <tbody className="bg-white">
+
                         {
                             bookings.map((booking, i) => <tr
                                 key={i}
                             >
-                                <th>{i+1}</th>
+                                <th>{i + 1}</th>
                                 <td>{booking.patientName}</td>
                                 <td>{booking.treatmentName}</td>
                                 <td>{booking.appointmentDate}</td>
                                 <td>{booking.slot}</td>
                             </tr>)
                         }
+
                     </tbody>
 
                 </table>
