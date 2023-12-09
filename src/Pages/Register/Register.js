@@ -37,6 +37,7 @@ const Register = () => {
                 userProfileUpdate(userInfo)
                     .then(() => {
                         saveUserInfo(data.name, data.email);
+                        getUserToken(data.email);
                     })
                     .catch(err => console.error(err))
             })
@@ -49,7 +50,7 @@ const Register = () => {
     // to save the user info in the database 
     const saveUserInfo = (name, email) => {
 
-        const user = {name, email};
+        const user = { name, email };
 
         fetch(`http://localhost:5000/users`, {
             method: "POST",
@@ -60,14 +61,29 @@ const Register = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
 
-                if(data.acknowledged){
+                if (data.acknowledged) {
                     // to ensure the user about confirmation 
                     toast.success("Resgistration is confirmed");
-                    // to redirect the user at home route
-                    navigate("/");
                 };
+            })
+    };
+
+    // to get jwt token from server side 
+    const getUserToken = (email) => {
+
+        fetch(`http://localhost:5000/jwt?email=${email}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if(data.accessToken){
+
+                    // to save the token in the local storage
+                    localStorage.setItem("accessToken", data.accessToken);
+
+                    // to redirect the user
+                    navigate("/");
+                }
             })
     };
 
