@@ -11,9 +11,10 @@ const Register = () => {
     const { createUser, userProfileUpdate } = useContext(AuthContext); // destructured auth elements 
     const [signUpError, setSignUpError] = useState(''); // to show sign up error in the UI 
     const navigate = useNavigate();
-    const [createdUserEmail, setCreatedUserEmail] = useState('');
-    const [token] = useToken(createdUserEmail); 
+    const [createdUserEmail, setCreatedUserEmail] = useState(''); // to store the user email for using in useToken 
+    const [token] = useToken(createdUserEmail); // to get the token after signed up 
 
+    // to redirect the user at home after sign up 
     if(token){
         navigate("/");
     };
@@ -66,6 +67,7 @@ const Register = () => {
                     // to ensure the user about confirmation 
                     toast.success("Resgistration is confirmed");
 
+                    // to get the user email
                     setCreatedUserEmail(email);
                 };
             })
