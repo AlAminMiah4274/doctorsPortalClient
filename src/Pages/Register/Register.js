@@ -3,19 +3,20 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import toast from "react-hot-toast";
+import useToken from "../../Hooks/useToken";
 
 const Register = () => {
 
-    // elements from react hook form 
-    const { register, handleSubmit, formState: { errors } } = useForm();
-
-    // destructured auth elements 
-    const { createUser, userProfileUpdate } = useContext(AuthContext);
-
-    // to show sign up error in the UI 
-    const [signUpError, setSignUpError] = useState('');
-
+    const { register, handleSubmit, formState: { errors } } = useForm(); // elements from react hook form 
+    const { createUser, userProfileUpdate } = useContext(AuthContext); // destructured auth elements 
+    const [signUpError, setSignUpError] = useState(''); // to show sign up error in the UI 
     const navigate = useNavigate();
+    const [createdUserEmail, setCreatedUserEmail] = useState('');
+    const [token] = useToken(createdUserEmail); 
+
+    if(token){
+        navigate("/");
+    };
 
     // to handle register form 
     const handleRegister = (data) => {
@@ -37,7 +38,6 @@ const Register = () => {
                 userProfileUpdate(userInfo)
                     .then(() => {
                         saveUserInfo(data.name, data.email);
-                        getUserToken(data.email);
                     })
                     .catch(err => console.error(err))
             })
@@ -65,25 +65,9 @@ const Register = () => {
                 if (data.acknowledged) {
                     // to ensure the user about confirmation 
                     toast.success("Resgistration is confirmed");
+
+                    setCreatedUserEmail(email);
                 };
-            })
-    };
-
-    // to get jwt token from server side 
-    const getUserToken = (email) => {
-
-        fetch(`http://localhost:5000/jwt?email=${email}`)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                if(data.accessToken){
-
-                    // to save the token in the local storage
-                    localStorage.setItem("accessToken", data.accessToken);
-
-                    // to redirect the user
-                    navigate("/");
-                }
             })
     };
 
