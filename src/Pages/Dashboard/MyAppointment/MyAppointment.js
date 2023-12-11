@@ -17,7 +17,6 @@ const MyAppointment = () => {
                 }
             });
             const data = await res.json();
-            console.log(data);
             return data;
         }
     });
@@ -42,9 +41,7 @@ const MyAppointment = () => {
                     <tbody className="bg-white">
 
                         {
-                            bookings.map((booking, i) => <tr
-                                key={i}
-                            >
+                            bookings.map((booking, i) => <tr key={booking._id}>
                                 <th>{i + 1}</th>
                                 <td>{booking.patientName}</td>
                                 <td>{booking.treatmentName}</td>
