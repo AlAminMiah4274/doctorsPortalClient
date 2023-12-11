@@ -3,21 +3,24 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import toast from "react-hot-toast";
+import useToken from "../../Hooks/useToken";
 
 const Login = () => {
 
-    // elements from react hook form 
-    const { register, formState: { errors }, handleSubmit } = useForm();
-
-    // destructured auth elements 
-    const { userLogIn } = useContext(AuthContext);
-
-    // to show log in related error 
-    const [loginError, setLoginError] = useState("");
-
+    const { register, formState: { errors }, handleSubmit } = useForm(); // elements from react hook form 
+    const { userLogIn } = useContext(AuthContext); // destructured auth elements 
+    const [loginError, setLoginError] = useState(""); // to show log in related error 
     const navigate = useNavigate();
     const location = useLocation();
+    const [loginUserEmail, setLoginUserEmail] = useState(""); // to set get the user email during login for using in useToken
+    const [token] = useToken(loginUserEmail); // to get email during login 
+
     const from = location.state?.from?.pathname || "/";
+
+    // to redirect the user after successful login 
+    if (token) {
+        navigate(from, { replace: true });
+    };
 
     // to handle the login form 
     const handleLogin = data => {
@@ -31,9 +34,9 @@ const Login = () => {
                 const user = result.user;
                 console.log(user);
 
-                toast.success("Log in confirmed");
+                setLoginUserEmail(data.email);
 
-                navigate(from, {replace: true});
+                toast.success("Log in confirmed");
             })
             .catch(err => {
                 // to send the error to the state
