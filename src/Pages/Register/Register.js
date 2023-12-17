@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
@@ -15,9 +15,11 @@ const Register = () => {
     const [token] = useToken(createdUserEmail); // to get the token after signed up 
 
     // to redirect the user at home after sign up 
-    if(token){
-        navigate("/");
-    };
+    useEffect(() => {
+        if (token) {
+            navigate("/");
+        };
+    }, [token, navigate]);
 
     // to handle register form 
     const handleRegister = (data) => {
