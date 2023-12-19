@@ -1,12 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import Loading from "../../../components/Loading/Loading";
-import toast from "react-hot-toast";
+import ConfirmationModal from "../../Shared/ConfirmationModal/ConfirmationModal";
 
 const ManageDoctor = () => {
 
+    const [deletingDoctor, setDeletingDoctor] = useState(null);
+
+
     // used try catch for catching the error 
-    const { data: doctors, isLoading, refetch } = useQuery({
+    const { data: doctors, isLoading } = useQuery({
         queryKey: ["doctors"],
         queryFn: async () => {
             try {
@@ -23,28 +26,16 @@ const ManageDoctor = () => {
     // to show the spinner during load time 
     if (isLoading) {
         return <Loading></Loading>
-    }
+    };
 
-    // to send the delete request to server side 
-    const handleDoctorDeleting = (id) => {
+    // to close the modal if the admin don't want to remove the doctor 
+    const closeModal = () => {
+        setDeletingDoctor(null);
+    };
 
-        const agree = window.confirm("Do you want to remove the doctor");
-
-        if (agree) {
-
-            fetch(`http://localhost:5000/doctors/${id}`, {
-                method: "DELETE"
-            })
-                .then(res => res.json())
-                .then(data => {
-
-                    if(data.acknowledged){
-                        toast.success("Successfully removed");
-                        refetch();
-                    }
-                })
-
-        }
+    // to delete/remove the doctor 
+    const handleDeleteDoctor = (doctor) => {
+        console.log(doctor);
     };
 
     return (
@@ -79,7 +70,8 @@ const ManageDoctor = () => {
                                 <td>{doctor.name}</td>
                                 <td>{doctor.email}</td>
                                 <th><button
-                                    onClick={() => handleDoctorDeleting(doctor._id)}
+                                    onClick={() => document.getElementById('confirmationModal').showModal()}
+                                    onMouseEnter={() => setDeletingDoctor(doctor)}
                                     className="btn btn-error btn-xs text-white">Delete</button>
                                 </th>
                             </tr>)
@@ -88,6 +80,17 @@ const ManageDoctor = () => {
 
                 </table>
             </div>
+
+            {
+                deletingDoctor && <ConfirmationModal
+                    title={`Are you sure to delete the doctor?`}
+                    message={`If doctor ${deletingDoctor.name} is deleted, it can't be undone!`}
+                    modalData={deletingDoctor}
+                    successAction={handleDeleteDoctor}
+                    closeModal={closeModal}
+                ></ConfirmationModal>
+            }
+
         </div>
     );
 };

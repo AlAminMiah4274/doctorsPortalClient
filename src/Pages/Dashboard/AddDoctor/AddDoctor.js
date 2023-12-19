@@ -65,10 +65,10 @@ const AddDoctor = () => {
     };
 
     return (
-        <div className="ml-14 mt-11">
-            <h1 className="text-4xl">Add a new doctor</h1>
+        <div className="lg:ml-14 lg:mt-11">
+            <h1 className="text-4xl mb-7">Add a new doctor</h1>
 
-            <div className="w-1/2 p-12 bg-white">
+            <div className="lg:w-1/2 p-12 bg-white">
 
                 <form onSubmit={handleSubmit(handleAddDoctorForm)}>
 
