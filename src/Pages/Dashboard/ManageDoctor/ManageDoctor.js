@@ -42,15 +42,17 @@ const ManageDoctor = () => {
     const handleDeleteDoctor = (doctor) => {
         
         fetch(`http://localhost:5000/doctors/${doctor._id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                authorization: `bearer ${localStorage.getItem("accessToken")}`
+            }
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
 
                 if(data.acknowledged){
-                    toast.success(`Removed ${doctor.name} successfully`);
 
+                    toast.success(`Removed ${doctor.name} successfully`);
                     refetch()
                 }
             })
