@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import Loading from "../../../components/Loading/Loading";
 import ConfirmationModal from "../../Shared/ConfirmationModal/ConfirmationModal";
+import toast from "react-hot-toast";
 
 const ManageDoctor = () => {
 
@@ -9,11 +10,15 @@ const ManageDoctor = () => {
 
 
     // used try catch for catching the error 
-    const { data: doctors, isLoading } = useQuery({
+    const { data: doctors, isLoading, refetch } = useQuery({
         queryKey: ["doctors"],
         queryFn: async () => {
             try {
-                const res = await fetch(`http://localhost:5000/doctors`);
+                const res = await fetch(`http://localhost:5000/doctors`, {
+                    headers: {
+                        authorization: `bearer ${localStorage.getItem("accessToken")}`
+                    }
+                });
                 const data = await res.json();
                 return data;
             }
@@ -35,7 +40,20 @@ const ManageDoctor = () => {
 
     // to delete/remove the doctor 
     const handleDeleteDoctor = (doctor) => {
-        console.log(doctor);
+        
+        fetch(`http://localhost:5000/doctors/${doctor._id}`, {
+            method: "DELETE"
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+
+                if(data.acknowledged){
+                    toast.success(`Removed ${doctor.name} successfully`);
+
+                    refetch()
+                }
+            })
     };
 
     return (
