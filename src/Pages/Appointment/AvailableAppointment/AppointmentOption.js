@@ -3,7 +3,7 @@ import React from "react";
 const AppointmentOption = ({ appointmentOption, setTreatment }) => {
 
     // destructured gotten from the AvailableAppointment component 
-    const { name, slots } = appointmentOption;
+    const { name, slots, price } = appointmentOption;
 
     return (
         <div className="card shadow-2xl">
@@ -13,11 +13,15 @@ const AppointmentOption = ({ appointmentOption, setTreatment }) => {
                 {/* shown appointment name */}
                 <h2 className="card-title justify-center">{name}</h2>
 
-                {/* shown appointment slots */}
-                <p className="text-center">{slots.length > 0 ? slots[0] : "Try Another Day"}</p>
+                <div className="text-center">
+                    {/* shown appointment slots */}
+                    <p>{slots.length > 0 ? slots[0] : "Try Another Day"}</p>
 
-                {/* shown available spaces */}
-                <p className="text-center">{slots.length} {slots.length > 1 ? 'Spaces' : 'Space'} Available</p>
+                    {/* shown available spaces */}
+                    <p>{slots.length} {slots.length > 1 ? 'Spaces' : 'Space'} Available</p>
+
+                    <p>Price: $ {price}</p>
+                </div>
 
                 <div className="card-actions justify-center mt-10">
 

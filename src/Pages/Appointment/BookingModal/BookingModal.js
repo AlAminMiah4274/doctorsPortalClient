@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
 
     // destructured gotten from the AvailableAppointment component 
-    const { name, slots } = treatment;
+    const { name, slots, price } = treatment;
     const { user } = useContext(AuthContext);
 
     const date = format(selectedDate, "PP");
@@ -31,7 +31,8 @@ const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
             patientName,
             patientEmail: email,
             patientPhone: phone,
-            slot
+            slot,
+            price
         };
 
         // to send the bookings data to the database 

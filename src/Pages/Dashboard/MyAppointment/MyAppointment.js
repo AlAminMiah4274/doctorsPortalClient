@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../../Context/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 const MyAppointment = () => {
 
@@ -35,6 +36,7 @@ const MyAppointment = () => {
                             <th>Treatment</th>
                             <th>Date</th>
                             <th>Time</th>
+                            <th>Payment</th>
                         </tr>
                     </thead>
 
@@ -47,6 +49,17 @@ const MyAppointment = () => {
                                 <td>{booking.treatmentName}</td>
                                 <td>{booking.appointmentDate}</td>
                                 <td>{booking.slot}</td>
+                                <td>
+                                    {
+                                        booking.price && !booking.paid &&
+                                        <Link to={`/dashboard/payment/${booking._id}`}>
+                                            <button className="btn btn-secondary btn-xs">Pay</button>
+                                        </Link>
+                                    }
+                                    {
+                                        booking.price && booking.paid && <span className="text-secondary">Paid</span>
+                                    }
+                                </td>
                             </tr>)
                         }
 
@@ -59,3 +72,13 @@ const MyAppointment = () => {
 };
 
 export default MyAppointment;
+
+/*
+payment system: 
+1. mobile banking
+2. bank account 
+3. credit card 
+4. payment gateway 
+
+international payment gateway: paypal, stripe
+*/
