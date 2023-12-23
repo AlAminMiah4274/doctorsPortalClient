@@ -18,9 +18,11 @@ const Payment = () => {
             <h1 className="text-3xl">Payment for {treatmentName}</h1>
             <p>Please pay <strong>${price}</strong> for your appointment on {appointmentDate} at {slot}</p>
 
-            <div className="">
+            <div className="lg:w-1/2">
                 <Elements stripe={stripePromise}>
-                    <CheckoutForm />
+                    <CheckoutForm
+                        booking={booking}
+                    />
                 </Elements>
             </div>
         </div>

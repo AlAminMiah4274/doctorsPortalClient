@@ -1,12 +1,33 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ booking }) => {
 
+    const [clientSecret, setClientSecret] = useState('');
     const [cardError, setCardError] = useState('')
     const stripe = useStripe();
     const elements = useElements();
+    const { price, patientEmail, patientName } = booking;
 
+
+    // to get client secret key from server side
+    useEffect(() => {
+        fetch(`http://localhost:5000/create-payment-intents`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `bearer ${localStorage.getItem("accessToken")}`
+            },
+            body: JSON.stringify({ price })
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data.clientSecret);
+                setClientSecret(data.clientSecret);
+            })
+    }, [price]);
+
+    // to control the checkout form 
     const handleSubmit = async (event) => {
 
         event.preventDefault();
@@ -22,20 +43,32 @@ const CheckoutForm = () => {
             return;
         }
 
-        // to set payment method 
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
+        // to create payment method 
+        const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
             type: "card",
             card
         });
 
-        // to show error 
-        if (error) {
-            console.log(error);
-            setCardError(error?.message);
+        // to show payment method error 
+        if (paymentMethodError) {
+            console.log(paymentMethodError);
+            setCardError(paymentMethodError?.message);
         }
         else {
             setCardError('');
         }
+
+        // to confirm card payment 
+        const { paymentIntent, error: cardPaymentError } = await stripe.confirmCardPayment({
+            clientSecret,
+            payment_method: {
+                card: card,
+                billing_dtails: {
+                    name: patientName,
+                    email: patientEmail
+                }
+            }
+        });
 
     };
 
@@ -60,7 +93,7 @@ const CheckoutForm = () => {
                     }}
                 />
 
-                <button type="submit" className="btn btn-secondary btn-sm mt-5" disabled={!stripe}>
+                <button type="submit" className="btn btn-secondary btn-sm mt-5" disabled={!stripe || !clientSecret}>
                     Pay
                 </button>
 
