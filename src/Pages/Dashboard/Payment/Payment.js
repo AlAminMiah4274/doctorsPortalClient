@@ -1,8 +1,9 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigation } from "react-router-dom";
 import CheckoutForm from "./CheckoutForm";
+import Loading from "../../../components/Loading/Loading";
 
 
 // stripe promise value 
@@ -12,6 +13,11 @@ const Payment = () => {
 
     const booking = useLoaderData();
     const {treatmentName, price, appointmentDate, slot} = booking;
+    const navigation = useNavigation();
+    
+    if(navigation.state === "loading"){
+        return <Loading></Loading>
+    };
 
     return (
         <div className="p-6">
