@@ -14,11 +14,11 @@ const Payment = () => {
     const {treatmentName, price, appointmentDate, slot} = booking;
 
     return (
-        <div>
+        <div className="p-6">
             <h1 className="text-3xl">Payment for {treatmentName}</h1>
             <p>Please pay <strong>${price}</strong> for your appointment on {appointmentDate} at {slot}</p>
 
-            <div className="lg:w-1/2">
+            <div className="lg:w-1/2 mt-5 shadow-xl p-6">
                 <Elements stripe={stripePromise}>
                     <CheckoutForm
                         booking={booking}

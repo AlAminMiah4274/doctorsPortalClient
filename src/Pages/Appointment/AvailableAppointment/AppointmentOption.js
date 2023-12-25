@@ -20,7 +20,7 @@ const AppointmentOption = ({ appointmentOption, setTreatment }) => {
                     {/* shown available spaces */}
                     <p>{slots.length} {slots.length > 1 ? 'Spaces' : 'Space'} Available</p>
 
-                    <p>Price: $ {price}</p>
+                    <p>Price: ${price}</p>
                 </div>
 
                 <div className="card-actions justify-center mt-10">
