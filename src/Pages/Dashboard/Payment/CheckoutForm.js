@@ -15,7 +15,7 @@ const CheckoutForm = ({ booking }) => {
 
     // to get client secret key from server side
     useEffect(() => {
-        fetch(`http://localhost:5000/create-payment-intents`, {
+        fetch(`https://doctors-portal-server-ashen-omega.vercel.app/create-payment-intents`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -87,7 +87,7 @@ const CheckoutForm = ({ booking }) => {
             };
 
             // to store payment info in the database 
-            fetch(`http://localhost:5000/payments`, {
+            fetch(`https://doctors-portal-server-ashen-omega.vercel.app/payments`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -36,7 +36,7 @@ const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
         };
 
         // to send the bookings data to the database 
-        fetch(`http://localhost:5000/bookings`, {
+        fetch(`https://doctors-portal-server-ashen-omega.vercel.app/bookings`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

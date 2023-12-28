@@ -7,7 +7,7 @@ const useToken = email => {
     useEffect(() => {
 
         if (email) {
-            fetch(`http://localhost:5000/jwt?email=${email}`)
+            fetch(`https://doctors-portal-server-ashen-omega.vercel.app/jwt?email=${email}`)
                 .then(res => res.json())
                 .then(data => {
 
